@@ -8,7 +8,7 @@ wget https://raw.githubusercontent.com/sunflyer/EasyUbuntu/master/lnmp.sh && sud
 
 This scripts will install PHP5.6 \ MySQL 5.6 and Nginx Stable Version FROM PPA SOURCE.  
 
-Note : MySQL 5.6 may install failed if memory lower tha 128MB （Due to buffer pool） , if you see something like "dpkg returned error code (1)" , please choose MySQL 5.5 or reduce Buffer Pool size(not recommended).
+Note : MySQL 5.6 may install failed if memory lower or equal than 128MB (<= 128M)（Due to buffer pool） , if you see something like "dpkg returned error code (1)" , please choose MySQL 5.5 or reduce Buffer Pool size(not recommended).
 
 
 ## Install Shadowsock Server :
