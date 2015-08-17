@@ -53,7 +53,7 @@ echo Nginx :
 nginx -V
 
 echo "########################################"
-echo  Installation complete . If you see	something error , please check by	yourself.
-echo  DO NOT FORGET to add the following line to your website configuration file ( "http" part or "fastcgi" part ) if using php via nginx , otherwise it may leads to blank content
+echo  "Installation complete . If you see	something error , please check by	yourself."
+echo  'DO NOT FORGET to add the following line to your website configuration file "http" part or "fastcgi" part if using php via nginx , otherwise it may leads to blank content'
 echo  "fastcgi_param  SCRIPT_FILENAME \$document_root\$fastcgi_script_name";
 echo "########################################"
