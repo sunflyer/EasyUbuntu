@@ -4,6 +4,9 @@
 # Will clean all mysql named directory in /etc and /var/lib
 # By CrazyChen
 
+rm -rf /var/lib/mysql/debian-*.flag
+apt-get install -f -y --force-yes
+
 echo "##########################################"
 echo "Removing MySQL ......"
 echo "##########################################"
