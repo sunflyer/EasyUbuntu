@@ -13,6 +13,23 @@ Note : MySQL 5.6 may install failed if memory lower or equal than 128MB (<= 128M
 In order to rollback to mysql 5.5 that provided by ubuntu/debian original source , you can use the "uninstMysql5.6.sh" I provided to try to do this automatically.
 
 
+## Quick Setup A HTTPS Site Using Nginx
+wget https://raw.githubusercontent.com/sunflyer/EasyUbuntu/master/setHttps.sh && sudo bash setHttps.sh
+
+This scripts will help you setup a website using https QUICKLY and EASILY
+
+To Use :  
+- Wget this script  
+- input information promoted , the Certificate file path should be absolute path (e.g. /etc/ssl/a.crt)
+- wait for a moment
+- enjoy your site via https !
+
+Note : The website configuration file will be put on /etc/nginx/site-enabled , 2 files named def-<HOST NAME> and ssl-<HOST NAME> will be generated for one operation. The file def-<HOST NAME> is used for port forwarding that user could always using HTTPS not HTTP port 80 , and ssl-<HOST NAME> is for SSL configurations.
+
+The configuration file generated will make the site using Forward Security and HSTS. You can always choose whether using it or not by editing ssl- files yourself.
+
+
+
 ## Install Shadowsock Server :
 wget https://raw.githubusercontent.com/sunflyer/EasyUbuntu/master/shadowsock.sh && sudo bash shadowsock.sh
 
