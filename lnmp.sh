@@ -12,34 +12,43 @@ apt-get install software-properties-common -y --force-yes
 add-apt-repository ppa:ondrej/php5-5.6 -y
 add-apt-repository ppa:nginx/stable -y
 add-apt-repository ppa:ondrej/mysql-5.6 -y
+echo "########################################"
 echo Now updating source
+echo "########################################"
 apt-get update
+
+echo "########################################"
 echo Applying Dist-Upgrade
+echo "########################################"
 apt-get dist-upgrade -y
+
+echo "########################################"
 echo Begin Installation
-echo ########################################
+echo "########################################"
 echo 	Nginx Installation Begin			
-echo ########################################
+echo "########################################"
 apt-get install nginx -y --force-yes
 
-echo ########################################
+echo "########################################"
 echo 	MySQL 5.6 Installation Begin		
-echo ########################################
+echo "########################################"
 apt-get install mysql-server -y --force-yes
 
-echo ########################################
+echo "########################################"
 echo 	PHP5.6 Installation Begin			
-echo ########################################
+echo "########################################"
 apt-get install php5 php5-fpm php5-mysql -y --force-yes
 
+echo "########################################"
 echo 	Checking for versions installed.
+echo "########################################"
 php5 -v
 php5-fpm -v
 mysqld --version
 nginx -V
 
-echo ########################################
-echo   Installation complete . If you see	
-echo  	something error , please check by 	
-echo  	yourself.							
-echo ########################################
+echo "########################################"
+echo  Installation complete . If you see	something error , please check by	yourself.
+echo  DO NOT FORGET to add the following line to your website configuration file ("http" part or "fastcgi" part) if using php via nginx , otherwise it may leads to blank content
+echo  "fastcgi_param  SCRIPT_FILENAME \$document_root\$fastcgi_script_name";
+echo "########################################"
