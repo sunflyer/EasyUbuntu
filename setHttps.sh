@@ -1,4 +1,18 @@
 #!/bin/bash
+
+# This is a quick SSL Site setup script for nginx
+# PHP-FPM is used by default with unix socket
+# By CrazyChen @ https://sunflyer.cn
+# Aug 17.2015
+
+echo "#####################################"
+echo "Welcome to use ! I need some information and please input with promot , thanks !"
+echo "After generation , you will have 2 configuration files generated in /etc/nginx/sites-enabled/ with beginning of def- and ssl-"
+echo "Logs of website will be in /var/log/host/'HOST NAME' and content should be in /var/www/'HOST NAME'"
+echo "ALSO , PHP-FPM WITH UNIX SOCK has been configured BY DEFAULT"
+echo "By CrazyChen @ https://sunflyer.cn Aug 17, 2015"
+echo "#####################################"
+
 echo -n "Please input a host name :"
 read HOST
 if [ -z $HOST ]; then
