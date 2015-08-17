@@ -10,12 +10,12 @@ apt-get install -f -y --force-yes
 echo "##########################################"
 echo "Removing MySQL ......"
 echo "##########################################"
-apt-get remove --purge mysql-server mysql-client mysql-common
+apt-get remove --purge mysql-server mysql-client mysql-common -y --force-yes
 
 echo "##########################################"
 echo "Autoremove Unneeded file ......"
 echo "##########################################"
-apt-get autoremove
+apt-get autoremove -y --force-yes
 
 echo "##########################################"
 echo "Autocleaning ......"
