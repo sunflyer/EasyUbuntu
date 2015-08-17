@@ -60,6 +60,7 @@ root  $WEBPATH;
 index index.php index.html;
 server_tokens off;
 listen 443  ssl spdy;
+listen [::]:443 ssl spdy;
 ssl on;
 ssl_certificate $PUBKEY;
 ssl_certificate_key $PRIVKEY;
@@ -77,18 +78,17 @@ ssl_session_cache shared:SSL:5m;
 ssl_session_timeout 5m;
 #ssl_session_tickets off;
 
-access_log /var/log/host/$HOST/access.log;
-error_log /var/log/host/$HOST/error.log;
+access_log /var/log/host/$HOST/access-ssl.log;
+error_log /var/log/host/$HOST/error-ssl.log;
 resolver 8.8.8.8;
   ssl_stapling on;
   ssl_trusted_certificate $PUBKEY;
   location ~ \.php$ {
         fastcgi_split_path_info ^(.+\.php)(/.+)$;
-#       # NOTE: You should have "cgi.fix_pathinfo = 0;" in php.ini}
-#
-#       # With php5-cgi alone:
-#       fastcgi_pass 127.0.0.1:9000;
-#       # With php5-fpm:
+        # NOTE: You should have "cgi.fix_pathinfo = 0;" in php.ini}
+        # With php5-cgi alone:
+        # fastcgi_pass 127.0.0.1:9000;
+        # With php5-fpm:
         fastcgi_pass unix:/var/run/php5-fpm.sock;
         fastcgi_index index.php;
         include fastcgi_params;
@@ -115,7 +115,9 @@ server {
         root $WEBPATH;
         index index.html index.htm;
         server_name $HOST;
-        return 301 https://$HOST;
+        return 301 https://$HOST\$request_uri;
+        access_log /var/log/host/$HOST/access.log;
+	error_log /var/log/host/$HOST/error.log;
         location / {
                 try_files \$uri \$uri/ =404;
         }
