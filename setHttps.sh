@@ -133,6 +133,6 @@ chown www-data -R /var/log/host
 echo "#####################################"
 echo "#####################################"
 echo "Reloading service"
-service nginx load
+service nginx reload
 echo "#####################################"
 echo "Complete Adding Host : $HOST"
