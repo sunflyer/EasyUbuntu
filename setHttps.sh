@@ -110,7 +110,9 @@ EOF
 echo "#####################################"
 echo "#####################################"
 echo "Make Directory and allocate permission"
+mkdir /var/www
 mkdir /var/www/$HOST
+mkdir /var/log/host
 mkdir /var/log/host/$HOST
 chown www-data -R /var/www
 chown www-data -R /var/log/host
