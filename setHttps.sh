@@ -98,7 +98,7 @@ resolver 8.8.8.8;
 
 location /{
          if (!-e \$request_filename)  {
-            rewrite ^(.+)\ /index.php last;
+            rewrite ^(.+)$ /index.php last;
           }
         try_files \$uri \$uri/ =404;
 }
