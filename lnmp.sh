@@ -42,9 +42,14 @@ apt-get install php5 php5-fpm php5-mysql -y --force-yes
 echo "########################################"
 echo 	Checking for versions installed.
 echo "########################################"
+echo PHP5 and FPM :
 php5 -v
 php5-fpm -v
+echo "########################################"
+echo MYSQL :
 mysqld --version
+echo "########################################"
+echo Nginx :
 nginx -V
 
 echo "########################################"
