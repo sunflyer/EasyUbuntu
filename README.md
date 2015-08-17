@@ -28,7 +28,7 @@ Note : The website configuration file will be put on /etc/nginx/site-enabled , 2
 
 The configuration file generated will make the site using Forward Security and HSTS. You can always choose whether using it or not by editing ssl- files yourself.
 
-
+PHP-FPM via UNIX SOCKET is configured by default.
 
 ## Install Shadowsock Server :
 wget https://raw.githubusercontent.com/sunflyer/EasyUbuntu/master/shadowsock.sh && sudo bash shadowsock.sh
