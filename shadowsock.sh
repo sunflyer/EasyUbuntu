@@ -34,7 +34,7 @@ echo "#####################################"
 echo -e '{"local_port":1080,\n"port_password":\n{\n "2333":"123456789",\n "2330":"987654321"\n},\n"method":"rc4-md5",\n"timeout":600}' > ssconfig.json
 echo -e '#!/bin/bash\nssserver -c ssconfig.json -d start --user nobody' > start.sh
 echo -e "#!/bin/bash\nssserver -d stop" > stop.sh
-echo -e "#!/bin/bash\nssserver -d restart" > restart.sh
+echo -e "#!/bin/bash\n./start.sh\n./stop.sh" > restart.sh
 chmod a+x start.sh
 chmod a+x stop.sh
 chmod a+x restart.sh
