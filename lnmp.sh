@@ -13,7 +13,7 @@ add-apt-repository ppa:ondrej/php5-5.6 -y
 
 wget http://nginx.org/keys/nginx_signing.key && apt-key add nginx_signing.key
 
-echo deb http://nginx.org/packages/mainline/ubuntu/ trusty >> /etc/apt/sources.list
+echo deb http://nginx.org/packages/mainline/ubuntu/ trusty nginx >> /etc/apt/sources.list
 echo deb-src http://nginx.org/packages/mainline/ubuntu/ trusty nginx >> /etc/apt/sources.list
 
 wget https://dev.mysql.com/get/mysql-apt-config_0.5.3-1_all.deb && dpkg -i mysql-apt-config_0.5.3-1_all.deb
