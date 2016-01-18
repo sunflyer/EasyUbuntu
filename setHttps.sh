@@ -53,7 +53,7 @@ echo -e "Private key : $PRIVKEY\n"
 echo Now Start Configuration
 echo "#####################################"
 echo "Writing document SSL"
-cat > /etc/nginx/sites-enabled/ssl-$HOST  << EOF
+cat > /etc/nginx/conf.d/ssl-$HOST  << EOF
 server{
 server_name $HOST;
 root  $WEBPATH;
@@ -108,7 +108,7 @@ EOF
 echo "#####################################"
 echo "#####################################"
 echo "Writing Document Jump"
-cat > /etc/nginx/sites-enabled/def-$HOST << EOF
+cat > /etc/nginx/conf.d/def-$HOST << EOF
 server {
         listen 80;
         listen [::]:80;
