@@ -28,13 +28,27 @@ echo "#####################################"
 pip install shadowsocks
 
 echo "#####################################"
+echo "Configuring chacha20 for shadowsocks"
+echo "#####################################"
+
+wget https://download.libsodium.org/libsodium/releases/LATEST.tar.gz
+tar zxf LATEST.tar.gz
+cd libsodium*
+./configure
+make && make install
+
+echo /usr/local/lib > /etc/ld.so.conf.d/usr_local_lib.conf
+ldconfig
+
+rm -rf libsodium* -rf
+echo "#####################################"
 echo "Configuring json and scripts"
 echo "#####################################"
 
-echo -e '{"local_port":1080,\n"port_password":\n{\n "2333":"123456789",\n "2330":"987654321"\n},\n"method":"rc4-md5",\n"timeout":600}' > ssconfig.json
+echo -e '{"local_port":1080,\n"port_password":\n{\n "2333":"123456789",\n "2330":"987654321"\n},\n"method":"chacha20",\n"timeout":600}' > ssconfig.json
 echo -e '#!/bin/bash\nssserver -c ssconfig.json -d start --user nobody' > start.sh
 echo -e "#!/bin/bash\nssserver -d stop" > stop.sh
-echo -e "#!/bin/bash\n./start.sh\n./stop.sh" > restart.sh
+echo -e "#!/bin/bash\n./stop.sh\n./start.sh" > restart.sh
 chmod a+x start.sh
 chmod a+x stop.sh
 chmod a+x restart.sh
