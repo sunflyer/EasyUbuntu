@@ -89,7 +89,7 @@ resolver 8.8.8.8;
         # With php5-cgi alone:
         # fastcgi_pass 127.0.0.1:9000;
         # With php5-fpm:
-        fastcgi_pass unix:/var/run/php5-fpm.sock;
+        fastcgi_pass unix:/run/php/php5.6-fpm.sock;
         fastcgi_index index.php;
         include fastcgi_params;
         fastcgi_param HTTPS on;
