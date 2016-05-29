@@ -66,7 +66,7 @@ ssl_certificate $PUBKEY;
 ssl_certificate_key $PRIVKEY;
 ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
 ssl_prefer_server_ciphers on;
-ssl_ciphers "EECDH+ECDSA+AESGCM EECDH+aRSA+AESGCM EECDH+ECDSA+SHA384 EECDH+ECDSA+SHA256 EECDH+aRSA+SHA384 EECDH+aRSA+SHA256 ECDHE-RSA-AES256-SHA ECDHE-RSA-AES128-SHA !RC4 !LOW !aNULL !eNULL !LOW !3DES !MD5 !EXP !PSK !SRP !DSS !MEDIUM";
+ssl_ciphers  "EECDH+CHACHA20:EECDH+CHACHA20-draft:EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!MD5:!MEDIUM:!LOW";
 
 add_header Strict-Transport-Security "max-age=31536000";
 add_header X-XSS-Protection '1; mode=block';
