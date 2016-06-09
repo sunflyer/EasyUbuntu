@@ -43,7 +43,7 @@ apt-get install mysql-server -y --force-yes
 echo "########################################"
 echo 	PHP5.6 Installation Begin			
 echo "########################################"
-apt-get install php5.6 php5.6-fpm php5.6-common php5.6-curl php5.6-gd php5.6-cli php5.6-mcrypt -y --force-yes
+apt-get install php5.6 php5.6-fpm php5.6-common php5.6-curl php5.6-gd php5.6-cli php5.6-mcrypt php5.6-mbstring php5.6-mysql -y --force-yes
 
 echo "########################################"
 echo 	Checking for versions installed.
