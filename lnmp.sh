@@ -9,7 +9,7 @@
 
 apt-get update
 apt-get install software-properties-common -y --force-yes 
-add-apt-repository ppa:ondrej/php5.6 -y
+add-apt-repository ppa:ondrej/php -y
 
 wget http://nginx.org/keys/nginx_signing.key && apt-key add nginx_signing.key
 
