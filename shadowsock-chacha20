@@ -1,9 +1,0 @@
-wget https://download.libsodium.org/libsodium/releases/LATEST.tar.gz
-tar zxf LATEST.tar.gz
-cd libsodium*
-./configure
-make && make install
-
-echo /usr/local/lib > /etc/ld.so.conf.d/usr_local_lib.conf
-ldconfig
-echo "Configuration Complete , please , edit your shadowsock configuration file , and change method to chacha20 , the restart your shadowsock";
