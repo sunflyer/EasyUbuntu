@@ -40,6 +40,7 @@ make && make install
 echo /usr/local/lib > /etc/ld.so.conf.d/usr_local_lib.conf
 ldconfig
 
+cd ../
 rm -rf libsodium* -rf
 echo "#####################################"
 echo "Configuring json and scripts"
