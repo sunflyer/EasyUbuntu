@@ -54,61 +54,6 @@ echo Now Start Configuration
 echo "#####################################"
 echo "Writing document SSL"
 cat > /etc/nginx/conf.d/ssl-$HOST.conf  << EOF
-server{
-server_name $HOST;
-root  $WEBPATH;
-index index.php index.html;
-server_tokens off;
-listen 443  ssl http2;
-listen [::]:443 ssl http2;
-ssl on;
-ssl_certificate $PUBKEY;
-ssl_certificate_key $PRIVKEY;
-ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
-ssl_prefer_server_ciphers on;
-ssl_ciphers  "EECDH+CHACHA20:EECDH+CHACHA20-draft:EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!MD5:!MEDIUM:!LOW";
-
-add_header Strict-Transport-Security "max-age=31536000";
-add_header X-XSS-Protection '1; mode=block';
-add_header X-Content-Type-Options 'nosniff';
-add_header X-Frame-Options 'SAMEORIGIN';
-
-## Use a SSL/TLS cache for SSL session resume.
-ssl_session_cache shared:SSL:5m;
-ssl_session_timeout 5m;
-#ssl_session_tickets off;
-
-access_log /var/log/host/$HOST/access-ssl.log;
-error_log /var/log/host/$HOST/error-ssl.log;
-resolver 8.8.8.8;
-  ssl_stapling on;
-  ssl_trusted_certificate $PUBKEY;
-  location ~ \.php$ {
-        fastcgi_split_path_info ^(.+\.php)(/.+)$;
-        # NOTE: You should have "cgi.fix_pathinfo = 0;" in php.ini}
-        # With php5-cgi alone:
-        # fastcgi_pass 127.0.0.1:9000;
-        # With php5-fpm:
-        fastcgi_pass unix:/run/php/php5.6-fpm.sock;
-        fastcgi_index index.php;
-        include fastcgi_params;
-        fastcgi_param HTTPS on;
-        fastcgi_param  SCRIPT_FILENAME \$document_root\$fastcgi_script_name;
-}
-
-location /{
-         if (!-e \$request_filename)  {
-            rewrite ^(.+)$ /index.php last;
-          }
-        try_files \$uri \$uri/ =404;
-}
-
-}
-EOF
-echo "#####################################"
-echo "#####################################"
-echo "Writing Document Jump"
-cat > /etc/nginx/conf.d/def-$HOST.conf << EOF
 server {
         listen 80;
         listen [::]:80;
@@ -121,6 +66,57 @@ server {
         location / {
                 try_files \$uri \$uri/ =404;
         }
+}
+
+
+server{
+	server_name $HOST;
+	root  $WEBPATH;
+	index index.php index.html;
+	server_tokens off;
+	listen 443  ssl http2;
+	listen [::]:443 ssl http2;
+	ssl on;
+	ssl_certificate $PUBKEY;
+	ssl_certificate_key $PRIVKEY;
+	ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+	ssl_prefer_server_ciphers on;
+	ssl_ciphers  "EECDH+CHACHA20:EECDH+CHACHA20-draft:EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!MD5:!MEDIUM:!LOW";
+
+	add_header Strict-Transport-Security "max-age=31536000";
+	add_header X-XSS-Protection '1; mode=block';
+	add_header X-Content-Type-Options 'nosniff';
+	add_header X-Frame-Options 'SAMEORIGIN';
+
+	## Use a SSL/TLS cache for SSL session resume.
+	ssl_session_cache shared:SSL:5m;
+	ssl_session_timeout 5m;
+	#ssl_session_tickets off;
+
+	access_log /var/log/host/$HOST/access-ssl.log;
+	error_log /var/log/host/$HOST/error-ssl.log;
+	resolver 8.8.8.8;
+	ssl_stapling on;
+  	ssl_trusted_certificate $PUBKEY;
+  	location ~ \.php$ {
+	 	fastcgi_split_path_info ^(.+\.php)(/.+)$;
+	 	# NOTE: You should have "cgi.fix_pathinfo = 0;" in php.ini}
+        	# With php5-cgi alone:
+        	# fastcgi_pass 127.0.0.1:9000;
+        	# With php5-fpm:
+        	fastcgi_pass unix:/run/php/php5.6-fpm.sock;
+        	fastcgi_index index.php;
+        	include fastcgi_params;
+        	fastcgi_param HTTPS on;
+        	fastcgi_param  SCRIPT_FILENAME \$document_root\$fastcgi_script_name;
+	}
+
+	location /{
+        	if (!-e \$request_filename)  {
+            		rewrite ^(.+)$ /index.php last;
+          	}
+        	try_files \$uri \$uri/ =404;
+	}
 }
 EOF
 echo "#####################################"
