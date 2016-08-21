@@ -7,7 +7,7 @@
 
 echo "#####################################"
 echo "Welcome to use ! I need some information and please input with promot , thanks !"
-echo "After generation , you will have 2 configuration files generated in /etc/nginx/sites-enabled/ with beginning of def- and ssl-"
+echo "After generation , you will have configuration file generated in /etc/nginx/conf.d/ with beginning of ssl-"
 echo "Logs of website will be in /var/log/host/'HOST NAME' and content should be in /var/www/'HOST NAME'"
 echo "ALSO , PHP-FPM WITH UNIX SOCK has been configured BY DEFAULT"
 echo "By CrazyChen @ https://sunflyer.cn Aug 17, 2015"
@@ -122,12 +122,11 @@ EOF
 echo "#####################################"
 echo "#####################################"
 echo "Make Directory and allocate permission"
-mkdir /var/www
-mkdir /var/www/$HOST
+mkdir -p /var/www/$HOST
 mkdir /var/log/host
-mkdir /var/log/host/$HOST
-chown www-data -R /var/www/$HOST
-chown www-data -R /var/log/host/$HOST
+mkdir -p /var/log/host/$HOST
+chown www-data:www-data -R /var/www/$HOST
+chown www-data:www-data -R /var/log/host/$HOST
 echo "#####################################"
 echo "#####################################"
 echo "Reloading service"
