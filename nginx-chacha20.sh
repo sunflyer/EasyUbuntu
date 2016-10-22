@@ -2,8 +2,8 @@
 
 mkdir /opt/nginx
 cd /opt/nginx
-wget http://nginx.org/download/nginx-1.10.1.tar.gz -O nginx.tar.gz
-wget http://ftp.openbsd.org/pub/OpenBSD/LibreSSL/libressl-2.4.1.tar.gz -O libressl.tar.gz
+wget http://nginx.org/download/nginx-1.10.2.tar.gz -O nginx.tar.gz
+wget http://ftp.openbsd.org/pub/OpenBSD/LibreSSL/libressl-2.5.0.tar.gz -O libressl.tar.gz
 
 echo "Decompressing LibreSSL"
 
