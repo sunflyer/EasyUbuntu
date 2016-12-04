@@ -31,7 +31,7 @@ echo "#####################################"
 echo "Configuring chacha20 for shadowsocks"
 echo "#####################################"
 
-wget https://download.libsodium.org/libsodium/releases/LATEST.tar.gz
+wget https://download.libsodium.org/libsodium/releases/LATEST.tar.gz -O LATEST.tar.gz
 tar zxf LATEST.tar.gz
 cd libsodium*
 ./configure
@@ -42,19 +42,16 @@ ldconfig
 
 cd ../
 rm -rf libsodium* -rf
+rm LATEST.tar.gz
 echo "#####################################"
 echo "Configuring json and scripts"
 echo "#####################################"
 
 echo -e '{"local_port":1080,\n"port_password":\n{\n "2333":"123456789",\n "2330":"987654321"\n},\n"method":"chacha20",\n"timeout":600}' > ssconfig.json
-echo -e '#!/bin/bash\nssserver -c ssconfig.json -d start --user nobody' > start.sh
-echo -e "#!/bin/bash\nssserver -d stop" > stop.sh
-echo -e "#!/bin/bash\n./stop.sh\n./start.sh" > restart.sh
-chmod a+x start.sh
-chmod a+x stop.sh
-chmod a+x restart.sh
+echo -e '#!/bin/bash\nssserver -d stop\nssserver -c ssconfig.json -d start --user nobody' > ss.sh
+chmod a+x ss.sh
 
-./start.sh
+./ss.sh
 
 echo "#####################################"
 echo "Shadowsock server has launched with RC4-MD5 encryption , default port is 2333 with password 123456789 and port 2330 with password 987654321 "
