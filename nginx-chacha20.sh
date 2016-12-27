@@ -25,7 +25,7 @@ cd ../../../
 echo "Preparing required libs for compiling nginx"
 
 apt-get update
-apt-get install libxslt1-dev libxml2-dev zlib1g-dev libpcre3-dev libgd-dev -y --force-yes
+apt-get install build-essential libxslt1-dev libxml2-dev zlib1g-dev libpcre3-dev libgd-dev -y --force-yes
 
 
 echo "Configuring Nginx Complies"
