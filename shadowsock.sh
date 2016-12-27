@@ -20,11 +20,13 @@ apt-get dist-upgrade -y
 echo "#####################################"
 echo " Install python pip and gevent   "
 echo "#####################################"
-apt-get install python-pip python-gevent -y --force-yes
+apt-get install python-pip -y --force-yes
 
 echo "#####################################"
 echo " Install Shadowsocks Server via pip"
 echo "#####################################"
+pip install setuptools
+pip install wheel
 pip install shadowsocks
 
 echo "#####################################"
