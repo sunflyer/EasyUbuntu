@@ -4,6 +4,10 @@ echo "By CrazyChen @ Jan 2,2016"
 
 VER="1.0.0.1"
 DATE="20170102"
+DIR="/etc/openvpn/clts"
+SVRIP=""
+PORT=1194
+PROTOCOL="udp"
 
 helpinf(){
         echo -e "Supported Usage : \nsetup.sh [OPERATION]\nWhere OPERATION coule be:\n"
@@ -35,8 +39,10 @@ svrconf(){
         echo "Please tell me which proto you would like to use ? (t for TCP and u for UDP , by default UDP is used) "
         PROTOCOL="udp"
         read PROTOCOL
-        if [ $PROTOCOL == 't']; then
+        if [ x$PROTOCOL == 'xt' ]; then
             PROTOCOL='tcp'
+        else
+            PROTOCOL='udp'
         fi
         #write conf file
 cat>/etc/openvpn/server.conf<<EOF
@@ -64,8 +70,37 @@ EOF
 echo "Gen conf complete"
 }
 
+getLocalIp(){
+
+}
+
 gencltConf(){
         echo "Config name for client is $1"
+        mkdir $DIR -p
+        getLocalIp()
+        
+cat>$DIR/$1.ovpn<<EOF
+        dev tun
+        proto udp
+        remote $SVRIP $PORT
+        cipher AES-128-CBC
+        auth SHA1
+        resolv-retry infinite
+nobind
+persist-key
+persist-tun
+client
+verb 3
+#auth-user-pass pass.txt
+comp-lzo
+<ca>
+</ca>
+<cert>
+</cert>
+<key>
+</key>
+EOF
+echo "Gen client complete"
 }
 
 genclt(){
@@ -85,7 +120,9 @@ install(){
         genkey   
         echo "Configuring svr"
         svrconf
-        echo "Config complete".
+        echo "Config complete , restarting openvpn"
+        service openvpn restart
+        service openvpn status
 }
 
 if [ $# -eq '0' ]; then
