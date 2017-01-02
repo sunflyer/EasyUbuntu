@@ -104,9 +104,9 @@ EOF
 echo "#####################################"
 echo "#####################################"
 echo "Make Directory and allocate permission"
-mkdir -p /var/www/$HOST
+mkdir -p $WEBPATH
 mkdir -p /var/log/host/$HOST
-chown www-data:www-data -R /var/www/
+chown www-data:www-data -R $WEBPATH
 chown www-data:www-data -R /var/log/host/
 echo "#####################################"
 echo "#####################################"
