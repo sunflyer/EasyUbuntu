@@ -34,7 +34,7 @@ echo "User Configuration is below"
 echo "HOST NAME 	: $HOST"
 echo "PUBLIC KEY 	: $PUBKEY"
 echo "PRIVATE KEY	: $PRIVKEY"
-echo "WEB ROOT		: $WEBROOT"
+echo "WEB ROOT		: $WEBPATH"
 echo "SSL PORT		: $SSL_PORT"
 echo "#####################################"
 
