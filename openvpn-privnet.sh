@@ -46,26 +46,26 @@ svrconf(){
         fi
         #write conf file
 cat>/etc/openvpn/server.conf<<EOF
-        port $PORT
-        proto $PROTOCOL
-        dev tun
-        ca ca.crt
-        cert server.crt
-        key server.key 
-        dh dh2048.pem
-        server 192.168.240.0 255.255.244.0
-        ifconfig-pool-persist ipp.txt
-        client-to-client
-        keepalive 10 120
-        cipher AES-128-CBC
-        comp-lzo
-        user nobody
-        group nogroup
-        persist-key
-        persist-tun
-        status openvpn-status.log
-        log         /var/log/openvpn.log
-        verb 3
+port $PORT
+proto $PROTOCOL
+dev tun
+ca ca.crt
+cert server.crt
+key server.key 
+dh dh2048.pem
+server 192.168.240.0 255.255.252.0
+ifconfig-pool-persist ipp.txt
+client-to-client
+keepalive 10 120
+cipher AES-128-CBC
+comp-lzo
+user nobody
+group nogroup
+persist-key
+persist-tun
+status openvpn-status.log
+log /var/log/openvpn.log
+verb 3
 EOF
 echo "Gen conf complete"
 }
