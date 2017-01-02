@@ -161,7 +161,7 @@ case $FUNC in
                 fi
                 ;;
         version)
-
+                echo "OpenVPN Private Network Setup Tool by CrazyChen @ $DATE , version $VER"
                 ;;
         update)
 
