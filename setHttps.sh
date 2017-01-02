@@ -5,6 +5,7 @@
 # By CrazyChen @ https://sunflyer.cn
 # Aug 17.2015
 
+PHP_SOCK="unix:/run/php/php5.6-fpm.sock"
 WEB_DIR="/var/www"
 HOST=""
 PUBKEY=""
@@ -86,7 +87,7 @@ server{
   	ssl_trusted_certificate $PUBKEY;
   	location ~ \.php$ {
 	 	fastcgi_split_path_info ^(.+\.php)(/.+)$;
-        	fastcgi_pass unix:/run/php/php5.6-fpm.sock;
+        	fastcgi_pass $PHP_SOCK;
         	fastcgi_index index.php;
         	include fastcgi_params;
         	fastcgi_param HTTPS on;
