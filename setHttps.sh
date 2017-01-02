@@ -5,50 +5,38 @@
 # By CrazyChen @ https://sunflyer.cn
 # Aug 17.2015
 
-echo "#####################################"
-echo "Welcome to use ! I need some information and please input with promot , thanks !"
-echo "After generation , you will have configuration file generated in /etc/nginx/conf.d/ with beginning of ssl-"
-echo "Logs of website will be in /var/log/host/'HOST NAME' and content should be in /var/www/'HOST NAME'"
-echo "ALSO , PHP-FPM WITH UNIX SOCK has been configured BY DEFAULT"
-echo "By CrazyChen @ https://sunflyer.cn Aug 17, 2015"
-echo "#####################################"
-
-echo -n "Please input a host name :"
-read HOST
-if [ -z $HOST ]; then
-        echo "Host Invalid"
-        exit 8
-fi
-
-echo -e "Host Name : $HOST\n"
-echo -n "Please choose the web-page path (Default : /var/www/$HOST) : "
-read WEBPATH
-if [ -z $WEBPATH ]; then
-        WEBPATH=/var/www/$HOST
+WEB_DIR="/var/www/"
+HOST=""
+PUBKEY=""
+PRIVKEY=""
+WEBPATH=""
+SSL_PORT=443
+if [ $# -lt '3' ]; then
+	echo "Usage : setHttps.sh [host name] [pubkey path] [priv key path] [webroot] [port]"
+	exit
 else
-        WEBPATH=/var/www/$WEBPATH
-fi
-echo -e "Path : $WEBPATH\n"
-echo -n "Where is public key file ? "
-read PUBKEY
-if [ -z $PUBKEY ]; then
-	if [  ! -f $PUBKEY ]; then
-        echo "Pubkey not found"
-        exit 8
+	HOST=$1
+	PUBKEY=$2
+	PRIVKEY=$3
+	if [ $# -gt '3' ]; then 
+		WEBPATH=$4
+	else
+		WEBPATH="$WEB_DIR/$HOST"
 	fi
-fi
-echo -e "Pubkey : $PUBKEY\n"
-
-echo -n "Where is private key ? "
-read PRIVKEY
-if [ -z $PRIVKEY ];  then
-	if [  ! -f  $PRIVKEY ]; then
-        echo "Private key  not found"
-        exit 8
+	
+	if [ $# -gt '4' ]; then
+		SSL_PORT=$5
 	fi
 fi
 
-echo -e "Private key : $PRIVKEY\n"
+echo "#####################################"
+echo "User Configuration is below"
+echo "HOST NAME 	: $HOST"
+echo "PUBLIC KEY 	: $PUBKEY"
+echo "PRIVATE KEY	: $PRIVKEY"
+echo "WEB ROOT		: $WEBROOT"
+echo "SSL PORT		: $SSL_PORT"
+echo "#####################################"
 
 echo Now Start Configuration
 echo "#####################################"
@@ -74,8 +62,8 @@ server{
 	root  $WEBPATH;
 	index index.php index.html;
 	server_tokens off;
-	listen 443  ssl http2;
-	listen [::]:443 ssl http2;
+	listen $SSL_PORT ssl http2;
+	listen [::]:$SSL_PORT ssl http2;
 	ssl on;
 	ssl_certificate $PUBKEY;
 	ssl_certificate_key $PRIVKEY;
@@ -87,11 +75,9 @@ server{
 	add_header X-XSS-Protection '1; mode=block';
 	add_header X-Content-Type-Options 'nosniff';
 	add_header X-Frame-Options 'SAMEORIGIN';
-
-	## Use a SSL/TLS cache for SSL session resume.
+	
 	ssl_session_cache shared:SSL:5m;
 	ssl_session_timeout 5m;
-	#ssl_session_tickets off;
 
 	access_log /var/log/host/$HOST/access-ssl.log;
 	error_log /var/log/host/$HOST/error-ssl.log;
@@ -100,10 +86,6 @@ server{
   	ssl_trusted_certificate $PUBKEY;
   	location ~ \.php$ {
 	 	fastcgi_split_path_info ^(.+\.php)(/.+)$;
-	 	# NOTE: You should have "cgi.fix_pathinfo = 0;" in php.ini}
-        	# With php5-cgi alone:
-        	# fastcgi_pass 127.0.0.1:9000;
-        	# With php5-fpm:
         	fastcgi_pass unix:/run/php/php5.6-fpm.sock;
         	fastcgi_index index.php;
         	include fastcgi_params;
@@ -123,10 +105,9 @@ echo "#####################################"
 echo "#####################################"
 echo "Make Directory and allocate permission"
 mkdir -p /var/www/$HOST
-mkdir /var/log/host
 mkdir -p /var/log/host/$HOST
-chown www-data:www-data -R /var/www/$HOST
-chown www-data:www-data -R /var/log/host/$HOST
+chown www-data:www-data -R /var/www/
+chown www-data:www-data -R /var/log/host/
 echo "#####################################"
 echo "#####################################"
 echo "Reloading service"
