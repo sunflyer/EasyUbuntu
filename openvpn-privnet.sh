@@ -41,7 +41,7 @@ svrconf(){
         echo "Please tell me which proto you would like to use ? (t for TCP and u for UDP , by default UDP is used) "
         PROTOCOL="udp"
         read PROTOCOL
-        if [ x$PROTOCOL == 'xt' ]; then
+        if [ "x$PROTOCOL" == 'xt' ]; then
             PROTOCOL='tcp'
         else
             PROTOCOL='udp'
