@@ -85,15 +85,14 @@ gencltConf(){
         mkdir $DIR_CLIENT -p
         cp /etc/openvpn/easy-rsa/keys/$1.crt $DIR_CLIENT
         cp /etc/openvpn/easy-rsa/keys/$1.key $DIR_CLIENT
-        getLocalIp
         CA_CERT=`cat /etc/openvpn/easy-rsa/keys/ca.crt`
         CLT_CERT=`cat /etc/openvpn/easy-rsa/keys/$1.crt`
         CLT_KEY=`cat /etc/openvpn/easy-rsa/keys/$1.key`
         
 cat>$DIR/$1.ovpn<<EOF
 dev tun
-proto $PROTOCOL
-remote $SVRIP $PORT
+proto $4
+remote $2 $3
 cipher AES-128-CBC
 auth SHA1
 resolv-retry infinite
@@ -120,10 +119,10 @@ echo "Gen client complete"
 genclt(){
         cd /etc/openvpn/easy-rsa
         echo "Client Cert : input a name for your client "
-        read NAME
+        #read NAME
         . ./vars
-        ./build-key $NAME
-        gencltConf $NAME
+        ./build-key $1
+        gencltConf $1 $2 $3 $4
 }
 
 install(){
@@ -153,7 +152,11 @@ case $FUNC in
                 install
                 ;;
         clt)
-                genclt
+                if [ $# -eq '5' ]; then
+                        genclt $2 $3 $4 $5
+                else
+                        helpinf
+                fi
                 ;;
         version)
 
