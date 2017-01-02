@@ -2,7 +2,7 @@
 echo "This is an OpenVPN Private Network Setting Tool"
 echo "By CrazyChen @ Jan 2,2016"
 
-VER="1.0.0.1"
+VER="1.0.1.3"
 DATE="20170102"
 DIR="/etc/openvpn/clts"
 SVRIP=""
@@ -55,7 +55,7 @@ ca ca.crt
 cert server.crt
 key server.key 
 dh dh2048.pem
-server 192.168.240.0 255.255.252.0
+server 192.168.240.0 255.255.240.0
 ifconfig-pool-persist ipp.txt
 client-to-client
 keepalive 10 120
@@ -91,7 +91,7 @@ gencltConf(){
         CLT_CERT=`cat /etc/openvpn/easy-rsa/keys/$1.crt`
         CLT_KEY=`cat /etc/openvpn/easy-rsa/keys/$1.key`
         
-cat>$DIR/$1.ovpn<<EOF
+cat>$DIR_CLIENT/$1.ovpn<<EOF
 dev tun
 proto $4
 remote $2 $3
