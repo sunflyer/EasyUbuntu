@@ -71,21 +71,32 @@ echo "Gen conf complete"
 }
 
 getLocalIp(){
-
+        echo "Please , which is your ip ?"
+        read SVRIP
+        echo "Which port are you using ?"
+        read PORT
+        echo "Protocol ?"
+        read PROTOCOL
 }
 
 gencltConf(){
         echo "Config name for client is $1"
-        mkdir $DIR -p
-        getLocalIp()
+        DIR_CLIENT="$DIR/$1"
+        mkdir $DIR_CLIENT -p
+        cp /etc/openvpn/easy-rsa/keys/$1.crt $DIR_CLIENT
+        cp /etc/openvpn/easy-rsa/keys/$1.key $DIR_CLIENT
+        getLocalIp
+        CA_CERT=`cat /etc/openvpn/easy-rsa/keys/ca.crt`
+        CLT_CERT=`cat /etc/openvpn/easy-rsa/keys/$1.crt`
+        CLT_KEY=`cat /etc/openvpn/easy-rsa/keys/$1.key`
         
 cat>$DIR/$1.ovpn<<EOF
-        dev tun
-        proto udp
-        remote $SVRIP $PORT
-        cipher AES-128-CBC
-        auth SHA1
-        resolv-retry infinite
+dev tun
+proto $PROTOCOL
+remote $SVRIP $PORT
+cipher AES-128-CBC
+auth SHA1
+resolv-retry infinite
 nobind
 persist-key
 persist-tun
@@ -94,10 +105,13 @@ verb 3
 #auth-user-pass pass.txt
 comp-lzo
 <ca>
+$CA_CERT
 </ca>
 <cert>
+$CLT_CERT
 </cert>
 <key>
+$CLT_KEY
 </key>
 EOF
 echo "Gen client complete"
@@ -107,6 +121,7 @@ genclt(){
         cd /etc/openvpn/easy-rsa
         echo "Client Cert : input a name for your client "
         read NAME
+        . ./vars
         ./build-key $NAME
         gencltConf $NAME
 }
@@ -138,7 +153,7 @@ case $FUNC in
                 install
                 ;;
         clt)
-
+                genclt
                 ;;
         version)
 
