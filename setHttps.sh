@@ -5,7 +5,7 @@
 # By CrazyChen @ https://sunflyer.cn
 # Aug 17.2015
 
-WEB_DIR="/var/www/"
+WEB_DIR="/var/www"
 HOST=""
 PUBKEY=""
 PRIVKEY=""
