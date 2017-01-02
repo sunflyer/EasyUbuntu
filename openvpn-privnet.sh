@@ -11,7 +11,9 @@ PROTOCOL="udp"
 
 helpinf(){
         echo -e "Supported Usage : \nsetup.sh [OPERATION]\nWhere OPERATION coule be:\n"
-         echo -e "\tinst : install server\n\tclt : generate client cert and conf\n\tversion : show version of this tools\n\tupdate : update this script"
+        echo -e "\tinst : install server\n\tclt : generate client cert and conf\n\tversion : show version of this tools\n\tupdate : update this script"
+        echo -e "\nWhere Params could be : \n"
+        echo -e "\tclt [client name] [server ip] [server port] [protocl]"
 }
 
 genkey(){
