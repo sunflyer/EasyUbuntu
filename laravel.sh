@@ -13,5 +13,6 @@ echo "Changing to $NAME"
 su $NAME
 cd ~/
 composer global require "laravel/installer"
-echo "Completed."
+echo "export PATH=\$PATH:/home/$NAME/.config/composer/vendor/bin" >> /home/$NAME/.bashrc
+echo "Completed. "
 
