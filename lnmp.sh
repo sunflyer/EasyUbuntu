@@ -11,10 +11,18 @@ apt-get update
 apt-get install software-properties-common -y --force-yes 
 add-apt-repository ppa:ondrej/php -y
 
-wget http://nginx.org/keys/nginx_signing.key && apt-key add nginx_signing.key
+wget http://nginx.org/keys/nginx_signing.key -O nginx.key && apt-key add nginx.key && rm nginx.key
 
-echo deb http://nginx.org/packages/mainline/ubuntu/ trusty nginx >> /etc/apt/sources.list
-echo deb-src http://nginx.org/packages/mainline/ubuntu/ trusty nginx >> /etc/apt/sources.list
+VER=""
+DATA=$(cat /etc/issue | grep 14.04)
+if [ "x$DATA" != "x" ]; then
+    VER="trusty"
+else
+    VER="xenial"
+fi
+
+echo deb http://nginx.org/packages/mainline/ubuntu/ $VER nginx >> /etc/apt/sources.list
+echo deb-src http://nginx.org/packages/mainline/ubuntu/ $VER nginx >> /etc/apt/sources.list
 
 #wget https://dev.mysql.com/get/mysql-apt-config_0.5.3-1_all.deb && dpkg -i mysql-apt-config_0.5.3-1_all.deb
 
