@@ -27,8 +27,14 @@ echo " Install Shadowsocks Server via pip"
 echo "#####################################"
 pip install setuptools
 pip install wheel
-pip install shadowsocks
+#pip install shadowsocks
+mkdir shadowsocks
+cd shadowsocks
+git clone https://github.com/shadowsocks/shadowsocks.git -b master
+cd shadowsocks
+python setup.py install
 
+cd ../
 echo "#####################################"
 echo "Configuring chacha20 for shadowsocks"
 echo "#####################################"
