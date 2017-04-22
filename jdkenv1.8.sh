@@ -1,4 +1,5 @@
 #!/bin/bash
+apt-get update && apt-get install curl -y && apt-get clean
 TIME=$(date +%s)
 TIME="$TIME"123
 FILENAME="jdk-8u131-linux-x64.tar.gz"
