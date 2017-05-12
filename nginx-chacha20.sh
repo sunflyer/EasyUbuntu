@@ -1,7 +1,7 @@
 #!/bin/bash
 
-LIBREVER=2.5.0
-NGINXVER=1.10.2
+LIBREVER=2.5.4
+NGINXVER=1.12.0
 
 mkdir /opt/nginx
 cd /opt/nginx
