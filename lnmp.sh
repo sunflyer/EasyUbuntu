@@ -11,6 +11,8 @@ apt-get update
 apt-get install software-properties-common -y --force-yes 
 add-apt-repository ppa:ondrej/php -y
 
+sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 4F4EA0AAE5267A6C
+
 wget http://nginx.org/keys/nginx_signing.key -O nginx.key && apt-key add nginx.key && rm nginx.key
 
 VER=""
