@@ -6,6 +6,8 @@
 # By CrazyChen @ https://sunflyer.cn
 # last updated : Aug 17 , 2015
 
+PHP_VERSION="7.1"
+PHP_PREFIX="php${PHP_VERSION}"
 
 apt-get update
 apt-get install software-properties-common -y --force-yes 
@@ -53,7 +55,7 @@ apt-get install mysql-server -y --force-yes
 echo "########################################"
 echo 	PHP5.6 Installation Begin			
 echo "########################################"
-apt-get install php5.6 php5.6-fpm php5.6-common php5.6-curl php5.6-gd php5.6-xml php5.6-bz2 php5.6-bcmath php5.6-ldap php5.6-sqlite3 php5.6-cli php5.6-mcrypt php5.6-mbstring php5.6-mysql -y --force-yes
+apt-get install ${PHP_PREFIX} ${PHP_PREFIX}-fpm ${PHP_PREFIX}-common ${PHP_PREFIX}-curl ${PHP_PREFIX}-gd ${PHP_PREFIX}-xml ${PHP_PREFIX}-bz2 ${PHP_PREFIX}-bcmath ${PHP_PREFIX}-ldap ${PHP_PREFIX}-sqlite3 ${PHP_PREFIX}-cli ${PHP_PREFIX}-mcrypt ${PHP_PREFIX}-mbstring ${PHP_PREFIX}-mysql -y --force-yes
 
 echo "########################################"
 echo  "Installation complete . If you see	something error , please check by	yourself."
