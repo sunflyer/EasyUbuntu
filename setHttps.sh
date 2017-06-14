@@ -5,7 +5,8 @@
 # By CrazyChen @ https://sunflyer.cn
 # Aug 17.2015
 
-PHP_SOCK="unix:/run/php/php5.6-fpm.sock"
+PHP_SOCK="unix:/run/php/php7.1-fpm.sock"
+#PHP_SOCK="unix:/run/php/php5.6-fpm.sock"
 WEB_DIR="/var/www"
 HOST=""
 PUBKEY=""
