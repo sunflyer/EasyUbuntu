@@ -9,8 +9,8 @@ wget "${ADDR}" -O linux-4.9.deb
 wget "${ADDR_HEADER_H}" -O linux-header-4.9-h.deb
 wget "${ADDR_HEADER}" -O linux-header-4.9.deb
 dpkg -i linux-4.9.deb
-dpkg -i linux-header-4.9.deb
 dpkg -i linux-header-4.9-h.deb
+dpkg -i linux-header-4.9.deb
 rm linux-4.9.deb
 rm linux-header-4.9.deb
 echo "net.core.default_qdisc=fq" >> /etc/sysctl.conf
