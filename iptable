@@ -5,8 +5,8 @@ iptables -t nat -A POSTROUTING -s ${VPN_IP_SOURCE} -j MASQUERADE
 # NAT端口转发
 INTERFACE="venet0"
 PROTOCOL="tcp"
-PORT="2333"
-DESTINATION="192.168.2.2"
+PORT="2333:2334"
+DESTINATION="192.168.2.2:2222"
 iptables -t nat -A PREROUTING -i ${INTERFACE} -p ${PROTOCOL} --dport ${PORT} -j DNAT --to-destination ${DESTINATION}
 
 # 允许FORWARD
