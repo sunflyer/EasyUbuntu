@@ -15,7 +15,7 @@ echo "#####################################"
 echo "Updating sources"
 echo "#####################################"
 apt-get update
-apt-get dist-upgrade -y
+apt-get upgrade -y
 
 echo "#####################################"
 echo " Install python pip and gevent   "
@@ -51,18 +51,30 @@ ldconfig
 cd ../
 rm -rf libsodium* -rf
 rm LATEST.tar.gz
+cd ../
 echo "#####################################"
 echo "Configuring json and scripts"
 echo "#####################################"
 
-echo -e '{"local_port":1080,\n"port_password":\n{\n "2333":"123456789",\n "2330":"987654321"\n},\n"method":"chacha20",\n"timeout":600}' > ssconfig.json
-echo -e '#!/bin/bash\nssserver -d stop\nssserver -c ssconfig.json -d start --user nobody' > ss.sh
+echo "Input port number for shadowsock (choose a port number from 1 to 65535) : "
+read PORT_NUM
+echo "Input password for shadowsock : "
+read PASSWORD
+
+CURR_PATH=`pwd`
+
+echo -e '{"local_port":1080,\n"port_password":\n{\n "${PORT_NUM}":"${PASSWORD}"},\n"method":"chacha20",\n"timeout":600}' > /etc/ssconfig.json
+echo -e '#!/bin/bash\nssserver -d stop\nssserver -c /etc/ssconfig.json -d start --user nobody' > ss.sh
 chmod a+x ss.sh
+
+#autorun for shadowsock
+ln -s ss.sh /etc/init.d/shadowsock-python-autorun
+update-rc.d shadowsock-python-autorun defaults 99
 
 ./ss.sh
 
 echo "#####################################"
-echo "Shadowsock server has launched with RC4-MD5 encryption , default port is 2333 with password 123456789 and port 2330 with password 987654321 "
-echo "Remember to change your password and port by editing ssconfig.json and run ./restart.sh to make it alive"
-echo "to start / stop / restart Shadowsock , run ./start.sh ./stop.sh or ./restart.sh "
+echo "Configuration complete"
+echo "Shadowsock Port : ${PORT_NUM}"
+echo "Shadowsock Password : ${PASSWORD}"
 echo "#####################################"
