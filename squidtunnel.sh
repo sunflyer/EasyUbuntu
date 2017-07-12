@@ -41,6 +41,14 @@ cert = $PUBKEY
 key = $PRIVKEY
 EOF
 
+cat > /etc/default/stunnel4 << EOF
+ENABLED=1
+FILES="/etc/stunnel/*.conf"
+OPTIONS=""
+PPP_RESTART=0
+RLIMITS=""
+EOF
+
 echo "Checking config of Squid"
 squid3 -k check
 echo "restarting service"
