@@ -15,6 +15,12 @@ WEBPATH=""
 SSL_PORT=443
 if [ $# -lt '3' ]; then
 	echo "Usage : setHttps.sh [host name] [pubkey path] [priv key path] [webroot] [port]"
+	echo "Where : "
+	echo -e "host name : host name of your website . e.g. www.qq.com"
+	echo -e "pubkey path : absolute path for your ssl public cert file"
+	echo -e "priv key path : absolute path for your ssl private key file"
+	echo -e "webroot [optional] : where your website root should be , by default is [${WEB_DIR}/<host name>] , this should be given in absolute path"
+	echo -e "port [optional] : ssl website server port , by default is ${SSL_PORT}"
 	exit
 else
 	HOST=$1
