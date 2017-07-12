@@ -19,7 +19,7 @@ rm linux-4.9.deb
 #rm linux-header-4.9.deb
 #rm linux-header-4.9-h.deb
 
-if [ ${UPDATE} -eq '1' ]; then
+if [ ${UPDATE} -eq '0' ]; then
     echo "net.core.default_qdisc=fq" >> /etc/sysctl.conf
     echo "net.ipv4.tcp_congestion_control=bbr" >> /etc/sysctl.conf
     sysctl -p
