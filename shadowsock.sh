@@ -39,7 +39,8 @@ echo "#####################################"
 echo "Configuring chacha20 for shadowsocks"
 echo "#####################################"
 
-wget https://download.libsodium.org/libsodium/releases/LATEST.tar.gz -O LATEST.tar.gz
+#wget https://download.libsodium.org/libsodium/releases/LATEST.tar.gz -O LATEST.tar.gz
+wget https://github.com/jedisct1/libsodium/releases/download/1.0.13/libsodium-1.0.13.tar.gz  -O LATEST.tar.gz
 tar zxf LATEST.tar.gz
 cd libsodium*
 ./configure
@@ -63,9 +64,17 @@ read PASSWORD
 
 CURR_PATH=`pwd`
 
-CONFIG_STR='{"local_port":1080,\n"port_password":\n{\n "${PORT_NUM}":"${PASSWORD}"},\n"method":"chacha20",\n"timeout":600}'
+cat > /etc/ssconfig.json << EOF
+{
+    "local_port":1080,
+    "port_password":{
+        "${PORT_NUM}":"${PASSWORD}"
+    },
+    "method":"chacha20",
+    "timeout":600
+}
+EOF
 
-echo -e ${CONFIG_STR} > /etc/ssconfig.json
 echo -e '#!/bin/bash\nssserver -d stop\nssserver -c /etc/ssconfig.json -d start --user nobody' > ss.sh
 chmod a+x ss.sh
 
