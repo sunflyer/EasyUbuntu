@@ -63,12 +63,14 @@ read PASSWORD
 
 CURR_PATH=`pwd`
 
-echo -e '{"local_port":1080,\n"port_password":\n{\n "${PORT_NUM}":"${PASSWORD}"},\n"method":"chacha20",\n"timeout":600}' > /etc/ssconfig.json
+CONFIG_STR='{"local_port":1080,\n"port_password":\n{\n "${PORT_NUM}":"${PASSWORD}"},\n"method":"chacha20",\n"timeout":600}'
+
+echo -e ${CONFIG_STR} > /etc/ssconfig.json
 echo -e '#!/bin/bash\nssserver -d stop\nssserver -c /etc/ssconfig.json -d start --user nobody' > ss.sh
 chmod a+x ss.sh
 
 #autorun for shadowsock
-ln -s ss.sh /etc/init.d/shadowsock-python-autorun
+ln -s "${CURR_PATH}/ss.sh" /etc/init.d/shadowsock-python-autorun
 update-rc.d shadowsock-python-autorun defaults 99
 
 ./ss.sh
