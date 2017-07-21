@@ -124,7 +124,7 @@ echo "Make Directory and allocate permission"
 if [ ! -d $WEBPATH ]; then
 	mkdir -p $WEBPATH
 fi
-if [ ! -d "" ]; then
+if [ ! -d "/var/log/host/$HOST" ]; then
 	mkdir -p /var/log/host/$HOST
 fi
 if [ ! -d ${LE_COMMON_PATH} ]; then
