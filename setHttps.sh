@@ -13,6 +13,9 @@ PUBKEY=""
 PRIVKEY=""
 WEBPATH=""
 SSL_PORT=443
+LE_WEB_NAME=".well-known"
+LE_COMMON_PATH="/var/www/letsencrypt/"
+
 if [ $# -lt '3' ]; then
 	echo "Usage : setHttps.sh [host name] [pubkey path] [priv key path] [webroot] [port]"
 	echo "Where : "
@@ -92,6 +95,12 @@ server{
 	resolver 8.8.8.8;
 	ssl_stapling on;
   	ssl_trusted_certificate $PUBKEY;
+	
+	location ~ /${LE_WEB_NAME} {
+		root ${LE_COMMON_PATH};
+		try_files \$uri \$uri/ =404;
+	}
+	
   	location ~ \.php$ {
 	 	fastcgi_split_path_info ^(.+\.php)(/.+)$;
         	fastcgi_pass $PHP_SOCK;
@@ -112,8 +121,17 @@ EOF
 echo "#####################################"
 echo "#####################################"
 echo "Make Directory and allocate permission"
-mkdir -p $WEBPATH
-mkdir -p /var/log/host/$HOST
+if [ ! -d $WEBPATH ]; then
+	mkdir -p $WEBPATH
+fi
+if [ ! -d "" ]; then
+	mkdir -p /var/log/host/$HOST
+fi
+if [ ! -d ${LE_COMMON_PATH} ]; then
+	echo "Creating Let's encrypt common authentication path ${LE_COMMON_PATH}"
+	mkdir -p ${LE_COMMON_PATH}
+fi
+
 chown www-data:www-data -R $WEBPATH
 chown www-data:www-data -R /var/log/host/
 echo "#####################################"
