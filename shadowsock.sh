@@ -70,7 +70,7 @@ cat > /etc/ssconfig.json << EOF
     "port_password":{
         "${PORT_NUM}":"${PASSWORD}"
     },
-    "method":"chacha20",
+    "method":"chacha20-ietf-poly1305",
     "timeout":600
 }
 EOF
