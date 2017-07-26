@@ -61,3 +61,15 @@ ln -s ${INSTALL_PATH}/run.sh /etc/init.d/ocserv-autorun
 update-rc.d ocserv-autorun defaults 99
 
 bash ${INSTALL_PATH}/run.sh
+
+cat > ${INSTALL_PATH}/addUser.sh << EOF
+#!/bin/bash
+echo "Input a user name for authentication / 请输入你的用户名 : "
+read USERNAME
+echo "Input password for your user / 请输入密码  "
+${INSTALL_PATH}/bin/ocpasswd -c ${INSTALL_PATH}/etc/passwd \${USERNAME}
+EOF
+
+chmod +x ${INSTALL_PATH}/addUser.sh
+
+bash ${INSTALL_PATH}/addUser.sh
