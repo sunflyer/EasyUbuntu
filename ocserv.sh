@@ -24,7 +24,7 @@ cd ocserv*
 
 mkdir ${INSTALL_PATH}/etc/
 
-cat >> ${INSTALL_PATH}/etc/config < EOF
+cat > ${INSTALL_PATH}/etc/config << EOF
 device = tun0
 auth = "plain[${INSTALL_PATH}/etc/passwd]"
 tcp-port = 8443
@@ -49,7 +49,7 @@ socket-file = /var/run/ocserv-socket.sf
 #run-as-group = ocserv
 EOF
 
-cat >> ${INSTALL_PATH}/run.sh < EOF
+cat > ${INSTALL_PATH}/run.sh << EOF
 #!/bin/bash
 iptables -t nat -D POSTROUTING -s 192.168.100.0/24 -j MASQUERADE
 ${INSTALL_PATH}/sbin/ocserv -c ${INSTALL_PATH}/etc/config
