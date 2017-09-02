@@ -101,6 +101,11 @@ server{
 		try_files \$uri \$uri/ =404;
 	}
 	
+	#avoid processing of calls to unexisting static files by yii
+	location ~ \.(js|css|png|jpg|gif|swf|ico|pdf|mov|fla|zip|rar)$ {
+		try_files $uri =404;
+	}
+	
   	location ~ \.php$ {
 	 	fastcgi_split_path_info ^(.+\.php)(/.+)$;
         	fastcgi_pass $PHP_SOCK;
