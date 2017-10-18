@@ -51,7 +51,7 @@ RLIMITS=""
 EOF
 
 echo "Checking config of Squid"
-squid3 -k check
+squid -k check
 echo "restarting service"
 service squid restart
 service stunnel4 restart
