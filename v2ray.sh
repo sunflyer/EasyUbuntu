@@ -72,7 +72,7 @@ if [ ${UPDATE} -eq '0' ]; then
                         "network":"ws",
                         "wsSettings": {
                                 "connectionReuse": true,
-                                "path": "${WS_PATH}" ,
+                                "path": "${WS_PATH}" 
                         }
                 }
         },
