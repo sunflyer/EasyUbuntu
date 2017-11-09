@@ -25,8 +25,8 @@ else
     VER="xenial"
 fi
 
-echo deb http://nginx.org/packages/mainline/ubuntu/ $VER nginx >> /etc/apt/sources.list
-echo deb-src http://nginx.org/packages/mainline/ubuntu/ $VER nginx >> /etc/apt/sources.list
+echo deb http://nginx.org/packages/ubuntu/ $VER nginx >> /etc/apt/sources.list
+echo deb-src http://nginx.org/packages/ubuntu/ $VER nginx >> /etc/apt/sources.list
 
 #wget https://dev.mysql.com/get/mysql-apt-config_0.5.3-1_all.deb && dpkg -i mysql-apt-config_0.5.3-1_all.deb
 
