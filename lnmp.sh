@@ -6,6 +6,17 @@
 # By CrazyChen @ https://sunflyer.cn
 # last updated : Aug 17 , 2015
 
+INSTALL_MYSQL=1
+INSTALL_PHP=1
+
+if [ $# -gt '0' ]; then
+    INSTALL_MYSQL=$1
+fi
+
+if [ $# -gt '1' ]; then
+    INSTALL_PHP=$2
+fi
+
 PHP_VERSION="7.1"
 PHP_PREFIX="php${PHP_VERSION}"
 
@@ -38,7 +49,7 @@ apt-get update
 echo "########################################"
 echo Applying Dist-Upgrade
 echo "########################################"
-apt-get dist-upgrade -y
+apt-get upgrade -y
 
 echo "########################################"
 echo Begin Installation
@@ -47,15 +58,64 @@ echo 	Nginx Installation Begin
 echo "########################################"
 apt-get install nginx -y --force-yes
 
+if [ ${INSTALL_MYSQL} -eq '1' ]; then
 echo "########################################"
 echo 	MySQL 5.6 Installation Begin		
 echo "########################################"
 apt-get install mysql-server -y --force-yes
+fi
 
+if [ ${INSTALL_PHP} -eq '1' ]; then
 echo "########################################"
 echo 	PHP5.6 Installation Begin			
 echo "########################################"
 apt-get install ${PHP_PREFIX} ${PHP_PREFIX}-fpm ${PHP_PREFIX}-common ${PHP_PREFIX}-curl ${PHP_PREFIX}-gd ${PHP_PREFIX}-xml ${PHP_PREFIX}-bz2 ${PHP_PREFIX}-bcmath ${PHP_PREFIX}-ldap ${PHP_PREFIX}-sqlite3 ${PHP_PREFIX}-cli ${PHP_PREFIX}-mcrypt ${PHP_PREFIX}-mbstring ${PHP_PREFIX}-mysql -y --force-yes
+fi
+
+mv /etc/nginx/nginx.conf /etc/nginx/nginx.conf.bak
+cat >> /etc/nginx/nginx.conf << EOF
+user  nginx;
+worker_processes  1;
+
+error_log  /var/log/nginx/error.log warn;
+pid        /var/run/nginx.pid;
+
+
+events {
+    worker_connections  1024;
+}
+
+
+http {
+    include       /etc/nginx/mime.types;
+    default_type  application/octet-stream;
+
+    log_format  main  '\$remote_addr - \$remote_user [\$time_local] "\$request" '
+                      '\$status \$body_bytes_sent "\$http_referer" '
+                      '"\$http_user_agent" "\$http_x_forwarded_for"';
+
+    access_log  /var/log/nginx/access.log  main;
+
+    sendfile        on;
+    #tcp_nopush     on;
+
+    keepalive_timeout  65;
+
+    #gzip  on;
+
+    client_max_body_size 100m;
+    server_tokens off;
+
+    include /etc/nginx/conf.d/*.conf;
+
+    gzip on;
+    gzip_vary on;
+    gzip_comp_level 6;
+    gzip_buffers 16 8k;
+    gzip_http_version 1.1;
+    gzip_types text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript;
+}
+EOF
 
 echo "########################################"
 echo  "Installation complete . If you see	something error , please check by	yourself."
