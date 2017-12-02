@@ -8,7 +8,6 @@ OLD_IFS="${IFS}"
 IFS=","
 
 LIST=(${SCR_LIST})
-LIST_E=(${EXEC_LIST})
 
 IFS=${OLD_IFS}
 
