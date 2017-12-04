@@ -26,7 +26,13 @@ mkdir ${INSTALL_PATH}/etc/
 
 cat > ${INSTALL_PATH}/etc/config << EOF
 device = tun0
+# by default using plain text authentication
+# comment this out if you would like to use cert auth
 auth = "plain[${INSTALL_PATH}/etc/passwd]"
+# uncomment following 3 line and download ocm.sh in this repo to use cert auth
+#auth = "certificate"
+#cert-user-oid = 2.5.4.3
+#ca-cert = /opt/ocserv/certs/ca.pem
 tcp-port = 8443
 udp-port = 8443
 try-mtu-discovery = true
@@ -34,7 +40,7 @@ max-clients = 128
 max-same-clients = 4
 server-cert = ${PUBKEY}
 server-key = ${PRIVKEY}
-ca-cert = ${PUBKEY}
+#ca-cert = ${PUBKEY}
 mobile-idle-timeout = 2400
 ipv4-network = 192.168.100.0
 ipv4-netmask = 255.255.255.0
