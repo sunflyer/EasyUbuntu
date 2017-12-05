@@ -1,7 +1,7 @@
 #!/bin/bash
 #懒的一个一个下载了，直接拉一群自动执行
 
-SCR_LIST="jdkenv1.8.sh,lnmp.sh,mkswap.sh,setHttps.sh,v2ray.sh"
+SCR_LIST="bbr.sh,jdkenv1.8.sh,lnmp.sh,mkswap.sh,setHttps.sh,v2ray.sh"
 DOWNADDR="https://github.com/sunflyer/EasyUbuntu/raw/master/"
 
 OLD_IFS="${IFS}"
