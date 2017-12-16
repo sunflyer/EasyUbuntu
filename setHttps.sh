@@ -5,6 +5,8 @@
 # By CrazyChen @ https://sunflyer.cn
 # Aug 17.2015
 
+ENABLE_TLS_13=1
+
 PHP_SOCK="unix:/run/php/php7.1-fpm.sock"
 #PHP_SOCK="unix:/run/php/php5.6-fpm.sock"
 WEB_DIR="/var/www"
@@ -38,6 +40,15 @@ else
 	if [ $# -gt '4' ]; then
 		SSL_PORT=$5
 	fi
+fi
+
+TLS_VER="TLSv1 TLSv1.1 TLSv1.2"
+TLS_CIPHER="EECDH+CHACHA20:EECDH+CHACHA20-draft:EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!MD5:!MEDIUM:!LOW"
+TLS_CURV=""
+if [ ${ENABLE_TLS_13} -eq '1' ]; then
+	TLS_VER="${TLS_VER} TLS1.3"
+	TLS_CIPHER="'[ECDHE-ECDSA-AES128-GCM-SHA256|ECDHE-ECDSA-CHACHA20-POLY1305|ECDHE-RSA-AES128-GCM-SHA256|ECDHE-RSA-CHACHA20-POLY1305]:ECDHE+AES128:RSA+AES128:ECDHE+AES256:RSA+AES256:ECDHE+3DES:RSA+3DES'"
+	TLS_CURV="ssl_ecdh_curve              X25519:P-256:P-384:P-224:P-521;"
 fi
 
 echo "#####################################"
@@ -78,9 +89,11 @@ server{
 	ssl on;
 	ssl_certificate $PUBKEY;
 	ssl_certificate_key $PRIVKEY;
-	ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+	${TLS_CURV}
+	ssl_protocols ${TLS_VER};
 	ssl_prefer_server_ciphers on;
-	ssl_ciphers  "EECDH+CHACHA20:EECDH+CHACHA20-draft:EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!MD5:!MEDIUM:!LOW";
+	#ssl_ciphers  "EECDH+CHACHA20:EECDH+CHACHA20-draft:EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!MD5:!MEDIUM:!LOW";
+	ssl_ciphers ${TLS_CIPHER};
 
 	add_header Strict-Transport-Security "max-age=31536000";
 	add_header X-XSS-Protection '1; mode=block';
