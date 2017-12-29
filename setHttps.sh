@@ -5,7 +5,8 @@
 # By CrazyChen @ https://sunflyer.cn
 # Aug 17.2015
 
-ENABLE_TLS_13=1
+ENABLE_TLS_13=0
+LOG_FORMAT=""
 
 PHP_SOCK="unix:/run/php/php7.1-fpm.sock"
 #PHP_SOCK="unix:/run/php/php5.6-fpm.sock"
@@ -71,7 +72,7 @@ server {
         index index.html index.htm;
         server_name $HOST;
         return 301 https://$HOST\$request_uri;
-        access_log /var/log/host/$HOST/access.log;
+        access_log /var/log/host/$HOST/access.log ${LOG_FORMAT};
 	error_log /var/log/host/$HOST/error.log;
         location / {
                 try_files \$uri \$uri/ =404;
@@ -103,7 +104,7 @@ server{
 	ssl_session_cache shared:SSL:5m;
 	ssl_session_timeout 5m;
 
-	access_log /var/log/host/$HOST/access-ssl.log;
+	access_log /var/log/host/$HOST/access-ssl.log ${LOG_FORMAT};
 	error_log /var/log/host/$HOST/error-ssl.log;
 	resolver 8.8.8.8;
 	ssl_stapling on;
