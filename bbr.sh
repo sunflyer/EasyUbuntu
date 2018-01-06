@@ -6,7 +6,7 @@ if [ $# -gt '0' ]; then
     UPDATE=1
 fi
 
-ADDR="http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.9.74/linux-image-4.9.74-040974-generic_4.9.74-040974.201801022030_amd64.deb"
+ADDR="http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.9.75/linux-image-4.9.75-040975-generic_4.9.75-040975.201801051530_amd64.deb"
 wget "${ADDR}" -O linux-4.9.deb
 #wget "${ADDR_HEADER_H}" -O linux-header-4.9-h.deb
 #wget "${ADDR_HEADER}" -O linux-header-4.9.deb
