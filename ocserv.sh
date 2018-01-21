@@ -5,8 +5,9 @@ if [ $# -lt '2' ]; then
   exit
 fi
 
-OCSERV_VERSION="0.11.8"
+OCSERV_VERSION="0.11.10"
 INSTALL_PATH="/opt/ocserv"
+SUBNET="192.168.100.0/24"
 
 PUBKEY=$1
 PRIVKEY=$2
@@ -42,14 +43,25 @@ server-cert = ${PUBKEY}
 server-key = ${PRIVKEY}
 #ca-cert = ${PUBKEY}
 mobile-idle-timeout = 2400
-ipv4-network = 192.168.100.0
-ipv4-netmask = 255.255.255.0
+ipv4-network = ${SUBNET}
 dns = 8.8.8.8
 dns = 8.8.4.4
 cisco-client-compat = true
 #route = 
-route-add-cmd = "ip route add 192.168.100.0 dev tun0"
-route-del-cmd = "ip route delete 192.168.100.0 dev tun0"
+#route-add-cmd = "ip route add 192.168.100.0 dev tun0"
+#route-del-cmd = "ip route delete 192.168.100.0 dev tun0"
+no-route=10.0.0.0/8
+no-route=100.64.0.0/10
+no-route=169.254.0.0/16
+no-route=172.16.0.0/12
+no-route=192.168.0.0/16
+no-route=203.0.113.0/24
+no-route=224.0.0.0/4
+no-route=240.0.0.0/4
+no-route=fc00::/7
+no-route=fe80::/10
+no-route=ff00::/8
+
 socket-file = /var/run/ocserv-socket.sf
 #run-as-user = ocserv 
 #run-as-group = ocserv
@@ -57,9 +69,9 @@ EOF
 
 cat > ${INSTALL_PATH}/run.sh << EOF
 #!/bin/bash
-iptables -t nat -D POSTROUTING -s 192.168.100.0/24 -j MASQUERADE
+iptables -t nat -D POSTROUTING -s ${SUBNET} -j MASQUERADE
 ${INSTALL_PATH}/sbin/ocserv -c ${INSTALL_PATH}/etc/config
-iptables -t nat -A POSTROUTING -s 192.168.100.0/24 -j MASQUERADE
+iptables -t nat -A POSTROUTING -s ${SUBNET} -j MASQUERADE
 EOF
 
 chmod +x ${INSTALL_PATH}/run.sh
