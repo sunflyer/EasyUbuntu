@@ -17,5 +17,6 @@ do
         echo "Getting script [${x}] from [${ADDR}]"
         curl -OL ${ADDR}
         chmod +x ${x}
-        bash {x}
+        # since script may not be required to run at the moment , no need the following line
+        # bash {x}
 done
