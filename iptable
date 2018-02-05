@@ -3,14 +3,21 @@ VPN_IP_SOURCE="192.168.1.0/24"
 iptables -t nat -A POSTROUTING -s ${VPN_IP_SOURCE} -j MASQUERADE
 
 # NAT端口转发
-iptables -P FORWARD ACCEPT 
-iptables -t nat -A POSTROUTING -o venet0 -j MASQUERADE
-INTERFACE="venet0"
-PROTOCOL="tcp"
-PORT="2333:2334"
-DESTINATION="192.168.2.2:2222"
-iptables -t nat -A PREROUTING -i ${INTERFACE} -p ${PROTOCOL} --dport ${PORT} -j DNAT --to-destination ${DESTINATION}
 
 # 允许FORWARD
 iptables -I FORWARD -j ACCEPT
+  #允许转发策略
+  #网络流量出口名称
+INTERFACE="venet0"
+  #NAT转发策略
+iptables -t nat -A POSTROUTING -o ${INTERFACE} -j MASQUERADE
+  #定义转发的协议
+PROTOCOL="tcp"
+  #端口范围
+PORT="2333:2334"
+  #转发目标
+DESTINATION="192.168.2.2:2222"
+iptables -t nat -A PREROUTING -i ${INTERFACE} -p ${PROTOCOL} --dport ${PORT} -j DNAT --to-destination ${DESTINATION}
 
+# 黑洞某个IP的路由
+ip route add blackhole 192.168.1.1/32 
