@@ -1,4 +1,11 @@
 #!/bin/bash
+//
+// seems there is some problem when using chrome to access the website which deployed with TLS1.3 draft 18 
+// this script is designed for testing in your prerelease or testing environment , do not use it in production
+//
+// TLS 1.3 Cipher suite : TLS13-AES-128-GCM-SHA256:TLS13-AES-256-GCM-SHA384:TLS13-AES-128-CCM-SHA256:TLS13-AES-128-CCM-8-SHA256 (of course more available , this list is just for example )
+// 
+
 
 NGINXVER=1.13.7
 OPENSSLDIR="openssl-1.1.1-tls1.3-draft-18"
