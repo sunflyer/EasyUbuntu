@@ -1,4 +1,9 @@
 #!/bin/bash
+#
+#       OpenVPN 内网组建工具
+#       由于OpenVZ虚拟化的VPS大部分不支持 IPSec 或者GRE等类型的隧道/协议，而TUN/TAP在大部分OpenVZ虚拟化的机器上都可以使用，因此使用OpenVPN来完成内网组建
+#       然而由于OpenVPN本身加解密和转发的性能问题。。。也就看看吧
+#
 echo "This is an OpenVPN Private Network Setting Tool"
 echo "By CrazyChen @ Jan 2,2016"
 
