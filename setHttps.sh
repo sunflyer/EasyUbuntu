@@ -96,10 +96,10 @@ server{
 	#ssl_ciphers  "TLS13-AES-128-GCM-SHA256:TLS13-AES-256-GCM-SHA384:TLS13-AES-128-CCM-SHA256:TLS13-AES-128-CCM-8-SHA256:EECDH+CHACHA20:EECDH+CHACHA20-draft:EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!MD5:!MEDIUM:!LOW";
 	ssl_ciphers "${TLS_CIPHER}";
 
-	add_header Strict-Transport-Security "max-age=31536000";
-	add_header X-XSS-Protection '1; mode=block';
-	add_header X-Content-Type-Options 'nosniff';
-	add_header X-Frame-Options 'SAMEORIGIN';
+	add_header Strict-Transport-Security "max-age=31536000" always;
+	add_header X-XSS-Protection '1; mode=block' always;
+	add_header X-Content-Type-Options 'nosniff' always;
+	add_header X-Frame-Options 'SAMEORIGIN' always;
 	
 	ssl_session_cache shared:SSL:5m;
 	ssl_session_timeout 5m;
