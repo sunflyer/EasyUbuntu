@@ -26,6 +26,9 @@ genkey(){
         openssl dhparam -out /etc/openvpn/dh2048.pem 2048
         echo "Operating"
         cd /etc/openvpn/easy-rsa
+        if [ ! -f openssl.cnf ]; then
+                cp openssl-1.0.0.cnf openssl.cnf
+        fi
         . ./vars
         echo "Cleaning all"
         ./clean-all
@@ -55,7 +58,7 @@ svrconf(){
 cat>/etc/openvpn/server.conf<<EOF
 port $PORT
 proto $PROTOCOL
-dev tun
+dev tap
 ca ca.crt
 cert server.crt
 key server.key 
@@ -97,7 +100,7 @@ gencltConf(){
         CLT_KEY=`cat /etc/openvpn/easy-rsa/keys/$1.key`
         
 cat>$DIR_CLIENT/$1.ovpn<<EOF
-dev tun
+dev tap
 proto $4
 remote $2 $3
 cipher AES-128-CBC
