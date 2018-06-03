@@ -29,12 +29,13 @@ sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 4F4EA0AAE5267A6C
 wget http://nginx.org/keys/nginx_signing.key -O nginx.key && apt-key add nginx.key && rm nginx.key
 
 VER=""
+source /etc/lsb-release
 DATA=`echo ${DISTRIB_RELEASE}| cut -c 1-2`
 if [ "$DATA" = "14" ]; then
     VER="trusty"
-else if [ "$DATA" = "16" ]; then
+elif [ "$DATA" = "16" ]; then
     VER="xenial"
-else if [ "$DATA" = "18" ]; then
+elif [ "$DATA" = "18" ]; then
     VER="bionic"
 fi
 
