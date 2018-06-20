@@ -13,20 +13,20 @@ PUBKEY=$1
 PRIVKEY=$2
 
 echo "####  Checking Updates And Dependens"
-apt-get update && apt-get install libgnutls28-dev libev-dev nettle-dev build-essential libreadline-dev  -y && apt-get clean
+apt-get update && apt-get install libgnutls28-dev libev-dev nettle-dev build-essential libreadline-dev pkg-config autogen  -y && apt-get clean
 
 mkdir -p "${INSTALL_PATH}/compile"
 cd "${INSTALL_PATH}/compile"
 wget ftp://ftp.infradead.org/pub/ocserv/ocserv-${OCSERV_VERSION}.tar.xz -O ocserv.tar.xz
 tar xvf ocserv.tar.xz
 
-cd ocserv*
+cd "${INSTALL_PATH}/compile/ocserv-${OCSERV_VERSION}"
 ./configure --prefix=${INSTALL_PATH} && make && make install
 
 mkdir ${INSTALL_PATH}/etc/
 
 cat > ${INSTALL_PATH}/etc/config << EOF
-device = tun0
+device = anyconnect
 # by default using plain text authentication
 # comment this out if you would like to use cert auth
 auth = "plain[${INSTALL_PATH}/etc/passwd]"
@@ -35,6 +35,7 @@ auth = "plain[${INSTALL_PATH}/etc/passwd]"
 #cert-user-oid = 2.5.4.3
 #ca-cert = /opt/ocserv/certs/ca.pem
 tcp-port = 8443
+#comment this out if DTLS ( UDP ) is disturbed by your ISP or firewall
 udp-port = 8443
 try-mtu-discovery = true
 max-clients = 128
@@ -69,6 +70,12 @@ EOF
 
 cat > ${INSTALL_PATH}/run.sh << EOF
 #!/bin/bash
+if [ `ps -auxf | grep ocserv | wc -l` -gt '1' ]; then
+	echo "Waiting for process exit"
+	killall ocserv-main -9
+	sleep 2
+fi
+
 iptables -t nat -D POSTROUTING -s ${SUBNET} -j MASQUERADE
 ${INSTALL_PATH}/sbin/ocserv -c ${INSTALL_PATH}/etc/config
 iptables -t nat -A POSTROUTING -s ${SUBNET} -j MASQUERADE
