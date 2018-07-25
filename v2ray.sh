@@ -40,8 +40,8 @@ fi
 echo "=============== V2Ray Quick Installer ==============="
 echo "==     Note : Will use TLS+WebSocket by default    =="
 
-apt-get update && apt-get install uuid curl -y && apt-get clean
-UUID=`uuid`
+apt-get update && apt-get install curl -y && apt-get clean
+UUID=`cat /proc/sys/kernel/random/uuid`
 
 echo "Instanlling v2ray using script "
 bash <(curl -L -s https://install.direct/go.sh)
