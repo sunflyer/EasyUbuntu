@@ -24,6 +24,12 @@ acl ncsa_users proxy_auth REQUIRED
 http_access allow ncsa_users
 http_access deny all
 httpd_suppress_version_string on
+cache deny all
+via off
+forwarded_for off
+follow_x_forwarded_for deny all
+request_header_access X-Forwarded-For deny all
+header_access X_Forwarded_For deny all
 EOF
 
 echo "Input user name for Proxy Authentication :"
