@@ -13,7 +13,7 @@ CACHE_SIZE="100m"
 INACTIVE="30m"
 MAX_SIZE="100m"
 LOG_PATH="/var/log/host/"
-LOG_FORMAT="mainLog"
+LOG_FORMAT=""
 HSTS_HEADER=""
 CHOWN="www-data:www-data"
 
