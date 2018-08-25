@@ -187,12 +187,16 @@ server {
 		proxy_set_header Connection '';
 		proxy_redirect off;
 	        proxy_set_header X-Real-IP \$remote_addr;
-		proxy_cache ${UPSTREAM_NAME};
-		proxy_cache_valid  200 304  30m;
-		proxy_cache_valid  301 24h;
-		proxy_cache_valid  500 502 503 504 0s;
-		proxy_cache_valid any 0s;
-		expires 12h;
+		
+		location ~ \.(js|css|png|jpg|gif|swf|ico|pdf|mov|fla|zip|rar|doc|docx|xls|xlsx|ppt|pptx|exe|7z|gz|tar|tgz|mp3|mp4|avi|flac) {
+			proxy_cache ssmiler_upstream_20180825231350;
+			proxy_cache_valid  200 304  30m;
+			proxy_cache_valid  301 24h;
+			proxy_cache_valid  500 502 503 504 0s;
+			proxy_cache_valid any 0s;
+			expires 12h;
+		}
+
 	}
 }
 
