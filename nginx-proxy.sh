@@ -15,6 +15,7 @@ MAX_SIZE="100m"
 LOG_PATH="/var/log/host/"
 LOG_FORMAT=""
 HSTS_HEADER=""
+HSTS_FORCE=""
 CHOWN="www-data:www-data"
 
 HSTS_RAW="
@@ -22,6 +23,12 @@ HSTS_RAW="
 	add_header X-XSS-Protection '1; mode=block';
 	add_header X-Content-Type-Options 'nosniff';
 	add_header X-Frame-Options 'SAMEORIGIN';
+"
+
+HSTS_FORCE_RAW="
+	if (\$scheme = http) {
+ 	       return 301 https://\$host\$request_uri;
+	}
 "
 
 if [ $# -lt 2 ]; then
@@ -35,7 +42,7 @@ if [ $# -lt 2 ]; then
 	echo -e "\t -s \t:\t using HTTPS as scheme when proxy to upstream "
 	echo -e "\t -p [port]\t:\t listen port (optional)"
 	echo -e "\t -n [path]\t:\t nginx conf file path for storing config file"
-	echo -e "\t -h \t:\t allow HSTS and protection header in cdn site"
+	echo -e "\t -h \t:\t allow HSTS and protection header in cdn site , this will also force redirect all http request to https by return 301"
 	echo -e "\t -m [size] \t:\t set max cache size ( i.e.  50m , 100m , 1g) , default is ${MAX_SIZE}"
 	echo -e "\t -i [time] \t:\t inactive time for cache ,default is ${INACTIVE}"
 	echo -e "\t -l [log path] \t:\t log file path , default is ${LOG_PATH}"
@@ -81,6 +88,7 @@ do
 		;;
 		h)
 			HSTS=${HSTS_RAW}
+			HSTS_FORCE=${HSTS_FORCE_RAW}
 			echo -e "\t HSTS Header and protection header added"
 		;;
 		m)
@@ -156,6 +164,8 @@ server {
 
 	access_log ${REAL_LOG_DIR}/http-access.log ${LOG_FORMAT};
 	error_log ${REAL_LOG_DIR}/http-error.log;
+
+	${HSTS_FORCE_RAW}
 
 	location ~ /.well-known {
 		root /var/www/letsencrypt/;
