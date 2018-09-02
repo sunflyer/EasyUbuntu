@@ -13,7 +13,7 @@ CACHE_SIZE="100m"
 INACTIVE="30m"
 MAX_SIZE="100m"
 LOG_PATH="/var/log/host/"
-LOG_FORMAT=""
+LOG_FORMAT="mainLog"
 HSTS_HEADER=""
 HSTS_FORCE=""
 CHOWN="www-data:www-data"
@@ -176,6 +176,28 @@ server {
 		return 403;
 	}
 
+	location ~ \.(js|css|png|jpg|gif|swf|ico|pdf|mov|fla|zip|rar|doc|docx|xls|xlsx|ppt|pptx|exe|7z|gz|tar|tgz|mp3|mp4|avi|flac) {
+		proxy_pass ${UPSTREAM_SCHEME}://${UPSTREAM_NAME};
+		proxy_http_version 1.1;
+		set \$addr \$remote_addr;
+		if ( \$http_cf_ray != "" ) {
+			set \$addr \$http_x_forwarded_for;
+		} 
+		proxy_set_header X-Forwarded-For \$addr;
+		proxy_set_header Connection '';
+		proxy_redirect off;
+		proxy_set_header X-Real-IP \$remote_addr;
+		proxy_set_header Host \$host;
+
+		proxy_cache ${UPSTREAM_NAME};
+		proxy_cache_valid  200 304  30m;
+		proxy_cache_valid  301 24h;
+		proxy_cache_valid  500 502 503 504 0s;
+		proxy_cache_valid any 0s;
+		expires 12h;
+	}
+
+
 	location / {
 		proxy_pass ${UPSTREAM_SCHEME}://${UPSTREAM_NAME};
 		proxy_http_version 1.1;
@@ -186,18 +208,8 @@ server {
 		proxy_set_header X-Forwarded-For \$addr;
 		proxy_set_header Connection '';
 		proxy_redirect off;
-	        proxy_set_header X-Real-IP \$remote_addr;
+		proxy_set_header X-Real-IP \$remote_addr;
 		proxy_set_header Host \$host;
-		
-		location ~ \.(js|css|png|jpg|gif|swf|ico|pdf|mov|fla|zip|rar|doc|docx|xls|xlsx|ppt|pptx|exe|7z|gz|tar|tgz|mp3|mp4|avi|flac) {
-			proxy_cache ${UPSTREAM_NAME};
-			proxy_cache_valid  200 304  30m;
-			proxy_cache_valid  301 24h;
-			proxy_cache_valid  500 502 503 504 0s;
-			proxy_cache_valid any 0s;
-			expires 12h;
-		}
-
 	}
 }
 
@@ -207,8 +219,8 @@ echo "[INFO] config generation complete"
 echo "[INFO] now creating directory"
 [ ! -d ${REAL_LOG_DIR} ] && mkdir -p ${REAL_LOG_DIR} && chown -R ${CHOWN} ${REAL_LOG_DIR}
 [ ! -d $CACHE_PATH/${CACHE_DIR_NAME} ] && mkdir -p $CACHE_PATH/${CACHE_DIR_NAME} && chown -R ${CHOWN} $CACHE_PATH/${CACHE_DIR_NAME}
-echo "[INFO] copy file to nginx conf directory [${NGINX_CONF_PATH}]"
-cp ${PROXY_FILE} ${NGINX_CONF_PATH}
-echo "[INFO] testing if config is available"
-nginx -t
+#echo "[INFO] copy file to nginx conf directory [${NGINX_CONF_PATH}]"
+#cp ${PROXY_FILE} ${NGINX_CONF_PATH}
+#echo "[INFO] testing if config is available"
+#nginx -t
 echo "[INFO] done."
