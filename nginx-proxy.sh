@@ -187,6 +187,7 @@ server {
 		proxy_set_header Connection '';
 		proxy_redirect off;
 	        proxy_set_header X-Real-IP \$remote_addr;
+		proxy_set_header Host \$host;
 		
 		location ~ \.(js|css|png|jpg|gif|swf|ico|pdf|mov|fla|zip|rar|doc|docx|xls|xlsx|ppt|pptx|exe|7z|gz|tar|tgz|mp3|mp4|avi|flac) {
 			proxy_cache ${UPSTREAM_NAME};
