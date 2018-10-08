@@ -88,7 +88,7 @@ server{
 	server_tokens off;
 	listen $SSL_PORT ssl http2;
 	listen [::]:$SSL_PORT ssl http2;
-	ssl on;
+	#ssl on;
 	ssl_certificate $PUBKEY;
 	ssl_certificate_key $PRIVKEY;
 	${TLS_CURV}
