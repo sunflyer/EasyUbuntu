@@ -56,7 +56,8 @@ if [ ${UPDATE} -eq '0' ]; then
                 "error":"/var/log/v2ray/error.log",
                 "loglevel":"warning"
         },
-        "inbound":{
+        "inbounds":[
+            {
                 "port":${PORT},
                 "protocol":"vmess",
                 "listen":"${LISTEN}",
@@ -75,11 +76,14 @@ if [ ${UPDATE} -eq '0' ]; then
                                 "path": "${WS_PATH}" 
                         }
                 }
-        },
-        "outbound":{
+            }
+        ],
+        "outbounds":[
+            {
                 "protocol": "freedom",
                 "settings": {}
-        }
+            }
+        ]
 }
 EOF
   service v2ray restart
