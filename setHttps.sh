@@ -7,8 +7,9 @@
 
 ENABLE_TLS_13=0
 LOG_FORMAT=""
+PHP_VER="7.2"
 
-PHP_SOCK="unix:/run/php/php7.1-fpm.sock"
+PHP_SOCK="unix:/run/php/php${PHP_VER}-fpm.sock"
 #PHP_SOCK="unix:/run/php/php5.6-fpm.sock"
 WEB_DIR="/var/www"
 HOST=""
