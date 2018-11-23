@@ -72,7 +72,7 @@ if [ ${INSTALL_PHP} -eq '1' ]; then
 echo "########################################"
 echo 	PHP5.6 Installation Begin			
 echo "########################################"
-apt-get install ${PHP_PREFIX} ${PHP_PREFIX}-fpm ${PHP_PREFIX}-common ${PHP_PREFIX}-curl ${PHP_PREFIX}-gd ${PHP_PREFIX}-xml ${PHP_PREFIX}-bz2 ${PHP_PREFIX}-bcmath ${PHP_PREFIX}-ldap ${PHP_PREFIX}-sqlite3 ${PHP_PREFIX}-cli ${PHP_PREFIX}-mcrypt ${PHP_PREFIX}-mbstring ${PHP_PREFIX}-mysql ${PHP_PREFIX}-redis ${PHP_PREFIX}-zip -y --force-yes
+apt-get install ${PHP_PREFIX} ${PHP_PREFIX}-fpm ${PHP_PREFIX}-common ${PHP_PREFIX}-curl ${PHP_PREFIX}-gd ${PHP_PREFIX}-xml ${PHP_PREFIX}-bz2 ${PHP_PREFIX}-bcmath ${PHP_PREFIX}-ldap ${PHP_PREFIX}-sqlite3 ${PHP_PREFIX}-cli ${PHP_PREFIX}-mbstring ${PHP_PREFIX}-mysql ${PHP_PREFIX}-redis ${PHP_PREFIX}-zip -y --force-yes
 fi
 
 mv /etc/nginx/nginx.conf /etc/nginx/nginx.conf.bak
