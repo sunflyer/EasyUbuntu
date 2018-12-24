@@ -5,7 +5,7 @@ if [ $# -lt '2' ]; then
   exit
 fi
 
-OCSERV_VERSION="0.11.10"
+OCSERV_VERSION="0.12.1"
 INSTALL_PATH="/opt/ocserv"
 SUBNET="192.168.100.0/24"
 
