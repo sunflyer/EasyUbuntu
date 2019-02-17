@@ -82,9 +82,47 @@ if [ ${UPDATE} -eq '0' ]; then
             {
                 "protocol": "freedom",
                 "settings": {}
+            },
+            {
+              "protocol": "blackhole",
+              "settings": {},
+              "tag": "fire"
             }
-        ]
+          ],
+          "routing": {
+                "strategy": "rules",
+                "settings": {
+                    "rules": [
+                          {
+                            "type": "field",
+                            "ip": [
+                                  "0.0.0.0/8",
+                                  "10.0.0.0/8",
+                                  "100.64.0.0/10",
+                                  "127.0.0.0/8",
+                                  "169.254.0.0/16",
+                                  "172.16.0.0/12",
+                                  "192.0.0.0/24",
+                                  "192.0.2.0/24",
+                                  "192.168.0.0/16",
+                                  "198.18.0.0/15",
+                                  "198.51.100.0/24",
+                                  "203.0.113.0/24",
+                                  "::1/128",
+                                  "fc00::/7",
+                                  "fe80::/10"
+                            ],
+                            "outboundTag": "fire"
+                          },
+                          {
+                                "type": "chinaip",
+                                "outboundTag": "fire"
+                          }
+                    ]
+                }
+          }	
 }
+
 EOF
   service v2ray restart
   echo -e "V2ray installation complete \n\tYour uuid is [${UUID}] \n\talter id is [${ALTER_ID}]"
