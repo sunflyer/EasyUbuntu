@@ -90,7 +90,7 @@ if [ ${UPDATE} -eq '0' ]; then
             }
           ],
           "routing": {
-                "strategy": "rules",
+                "domainStrategy": "IPOnDemand",
                 "settings": {
                     "rules": [
                           {
