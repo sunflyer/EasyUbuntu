@@ -117,7 +117,18 @@ if [ ${UPDATE} -eq '0' ]; then
                           {
                                 "type": "chinaip",
                                 "outboundTag": "fire"
+                          },
+                          {
+                            "type": "field",
+                            "domain": [
+                              "regexp:(.*\\.||)(rfa|boxun|dafahao|minghui|dongtaiwang|epochtimes|ntdtv|falundafa|wujieliulan|zhengjian)\\.(org|com|net)",
+                              "regexp:(^.*\\@)(guerrillamail|guerrillamailblock|sharklasers|grr|pokemail|spam4|bccto|chacuo|027168)\\.(info|biz|com|de|net|org|me|la)",
+                              "regexp:(api|ps|sv|offnavi|newvector|ulog\\.imap|newloc)(\\.map|)\\.(baidu|n\\.shifen)\\.com",
+                              "regexp:(.+\\.|^)(360|so)\\.(cn|com)"
+                            ],
+                            "outboundTag": "fire"
                           }
+
                     ]
                 }
           }	
